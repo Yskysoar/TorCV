@@ -1,0 +1,56 @@
+{
+  "name": "torcv",
+  "productName": "TorCV",
+  "version": "1.0.0",
+  "description": "Windows 本地剪切板文本管理工具 — 分组管理、键盘快速选择、一键粘贴",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "lint": "node scripts/check-js.js",
+    "typecheck": "node scripts/check-js.js",
+    "test": "node --test",
+    "dist": "electron-builder --win --x64 -p never"
+  },
+  "build": {
+    "appId": "com.torcv.app",
+    "productName": "TorCV",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*"
+    ],
+    "win": {
+      "icon": "build/icon.ico",
+      "target": [
+        {
+          "target": "portable",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    },
+    "portable": {
+      "artifactName": "TorCV-${version}.exe"
+    },
+    "publish": null
+  },
+  "keywords": [
+    "clipboard",
+    "text-manager",
+    "snippets",
+    "productivity",
+    "electron",
+    "windows"
+  ],
+  "author": "TorCV",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "42.4.0",
+    "electron-builder": "26.15.3"
+  },
+  "dependencies": {
+    "koffi": "^3.0.2"
+  }
+}

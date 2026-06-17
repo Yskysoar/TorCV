@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TorCV</title>
+  <link rel="stylesheet" href="../styles.css" />
+</head>
+<body>
+  <div class="shell" id="app">
+    <div class="titlebar">
+      <div class="titlebar-left">
+        <span class="app-icon" aria-hidden="true"></span>
+        <span class="titlebar-title">TorCV</span>
+      </div>
+      <div class="titlebar-actions">
+        <button class="titlebar-btn close" id="btnClose" title="关闭">&#x00D7;</button>
+      </div>
+    </div>
+    <nav class="top-strip" id="topStrip" aria-label="分组与设置"></nav>
+    <div class="content" id="contentArea"></div>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script type="module" src="renderer.js"></script>
+</body>
+</html>
