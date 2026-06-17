@@ -30,6 +30,18 @@ async function refresh() {
   _render();
 }
 
+async function moveItemToTop(groupId, itemId) {
+  const group = state.groups.find((g) => g.id === groupId);
+  if (!group || !itemId) return;
+  const orderedIds = [
+    itemId,
+    ...sortedItems(group)
+      .filter((item) => item.id !== itemId)
+      .map((item) => item.id)
+  ];
+  await api.data.reorderItems(groupId, orderedIds);
+}
+
 // ── 路由分发 ──────────────────────────────────────────────────────────────
 
 export function renderManageView() {
@@ -516,8 +528,12 @@ export async function addGroup() {
 export async function addItemByPrompt(groupId) {
   const text = await showModalInput('新条目内容');
   if (!text?.trim()) return;
-  const res = await api.data.createItem(groupId, text.trim());
-  if (!res.ok) showToast(res.error === 'DUPLICATE' ? '此文本已存在' : res.error);
+  const res = await api.data.createItem(groupId, text.trim(), { order: 0 });
+  if (!res.ok) {
+    showToast(res.error === 'DUPLICATE' ? '此文本已存在' : res.error);
+    return;
+  }
+  await moveItemToTop(groupId, res.item?.id);
   await refresh();
 }
 
@@ -531,19 +547,11 @@ export async function addItemFromClipboard(groupId) {
     showToast('剪切板为空');
     return;
   }
-  const group = state.groups.find((g) => g.id === groupId);
-  const maxOrder = group ? group.items.reduce((m, i) => Math.max(m, i.order), -1) : -1;
-  const res = await api.data.createItem(groupId, text, { order: maxOrder + 1 });
+  const res = await api.data.createItem(groupId, text, { order: 0 });
   if (!res.ok) {
     showToast(res.error === 'DUPLICATE' ? '此文本已存在于当前分组' : res.error);
     return;
   }
-  // 使用 reorderItems 一次性完成排序：新条目排第一
-  const groupAfter = state.groups.find((g) => g.id === groupId);
-  if (groupAfter && res.item) {
-    const items = sortedItems(groupAfter);
-    const orderedIds = [res.item.id, ...items.filter(i => i.id !== res.item.id).map(i => i.id)];
-    await api.data.reorderItems(groupId, orderedIds);
-  }
+  await moveItemToTop(groupId, res.item?.id);
   await refresh();
 }
