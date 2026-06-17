@@ -36,7 +36,7 @@ function trayIconImage() {
 
 function createTray() {
   tray = new Tray(trayIconImage());
-  tray.setToolTip('TorCV — 剪切板文本管理');
+  tray.setToolTip('TorCV');
   const ctx = Menu.buildFromTemplate([
     { label: '打开', click: () => { state.targetHwnd = null; showClipboardPanel(); } },
     { label: '设置', click: () => showManagerSettings() },
