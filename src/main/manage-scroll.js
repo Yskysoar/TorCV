@@ -3,7 +3,7 @@ import { VISIBLE_ITEM_COUNT } from './clipboard-view.js';
 
 const MANAGE_SCROLL_BOTTOM_GAP = 8;
 
-function scrollManageList(listSelector, direction) {
+function scrollManageList(listSelector, direction, rowsPerStep = VISIBLE_ITEM_COUNT) {
   const contentArea = getContentArea();
   const list = contentArea?.querySelector(listSelector);
   const row = list?.querySelector('.manage-row');
@@ -12,7 +12,7 @@ function scrollManageList(listSelector, direction) {
   const listStyle = window.getComputedStyle(list);
   const gap = Number.parseFloat(listStyle.rowGap || listStyle.gap) || 0;
   const rowStep = row.getBoundingClientRect().height + gap;
-  const step = rowStep * VISIBLE_ITEM_COUNT;
+  const step = rowStep * rowsPerStep;
   const dir = direction > 0 ? 1 : -1;
   const current = contentArea.scrollTop;
   const contentRect = contentArea.getBoundingClientRect();
@@ -28,5 +28,5 @@ export function scrollManageGroups(direction) {
 }
 
 export function scrollManageItems(direction) {
-  scrollManageList('#itemManageList', direction);
+  scrollManageList('#itemManageList', direction, 1);
 }
