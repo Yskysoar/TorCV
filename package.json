@@ -14,6 +14,9 @@
   "build": {
     "appId": "com.torcv.app",
     "productName": "TorCV",
+    "electronDownload": {
+      "mirror": "https://npmmirror.com/mirrors/electron/"
+    },
     "directories": {
       "output": "dist"
     },
@@ -21,7 +24,11 @@
       "src/**/*"
     ],
     "win": {
-      "icon": "build/icon.ico",
+      "icon": "src/icon.png",
+      "electronLanguages": [
+        "zh-CN",
+        "en-US"
+      ],
       "target": [
         {
           "target": "portable",

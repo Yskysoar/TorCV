@@ -4,6 +4,10 @@
   </h1>
 
   <p align="center">
+    <img src="src/icon.png" alt="TorCV icon" width="128">
+  </p>
+
+  <p align="center">
     <a href="https://github.com/Yskysoar/TorCV"><img src="https://img.shields.io/badge/platform-Windows-0078D4?style=for-the-badge" alt="Platform"></a>
     <a href="https://github.com/Yskysoar/TorCV/blob/main/package.json"><img src="https://img.shields.io/badge/Electron-42-47848F?style=for-the-badge" alt="Electron"></a>
     <a href="https://github.com/Yskysoar/TorCV/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-2EA44F?style=for-the-badge" alt="License"></a>
@@ -19,10 +23,13 @@
 
 ## 核心能力
 
-- [x] 自动同步当前剪切板内容到内置历史分组
-- [x] 通过单手键盘即可切换分组、选中文本并完成粘贴
-- [x] 支持自定义全局快捷键和面板内导航快捷键
-- [x] 支持自定义分组和文本内容
+✅自动同步当前剪切板内容到内置历史分组
+
+✅通过单手键盘即可切换分组、选中文本并完成粘贴
+
+✅支持自定义全局快捷键和面板内导航快捷键
+
+✅支持自定义分组和文本内容
 
 ## 界面预览
 
@@ -68,6 +75,20 @@
 ## 快速开始
 
 前往 [Releases](https://github.com/Yskysoar/TorCV/releases) 下载发布版 exe，双击即可运行，无需安装、无需额外配置。
+
+## 常见问题
+
+### Windows 提示未知发布者怎么办？
+
+当前版本未做代码签名，Windows 可能会显示安全提示。确认下载来源为本项目 Releases 后，可以选择继续运行。
+
+### 数据会上传到服务器吗？
+
+不会。TorCV 是本地剪贴板文本管理工具，数据保存在本机。
+
+### 遇到问题或有功能建议怎么办？
+
+可以前往 [Issues](https://github.com/Yskysoar/TorCV/issues) 提交问题、反馈或功能建议。
 
 ## 许可证
 

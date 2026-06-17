@@ -4,6 +4,10 @@
   </h1>
 
   <p align="center">
+    <img src="src/icon.png" alt="TorCV icon" width="128">
+  </p>
+
+  <p align="center">
     <a href="https://github.com/Yskysoar/TorCV"><img src="https://img.shields.io/badge/platform-Windows-0078D4?style=for-the-badge" alt="Platform"></a>
     <a href="https://github.com/Yskysoar/TorCV/blob/main/package.json"><img src="https://img.shields.io/badge/Electron-42-47848F?style=for-the-badge" alt="Electron"></a>
     <a href="https://github.com/Yskysoar/TorCV/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-2EA44F?style=for-the-badge" alt="License"></a>
@@ -19,10 +23,13 @@
 
 ## Highlights
 
-- [x] Sync clipboard content into built-in history
-- [x] One-hand keyboard flow for group switching, item selection, and paste
-- [x] Custom global shortcut and panel navigation keys
-- [x] Custom text groups and item content
+✅Sync clipboard content into built-in history
+
+✅One-hand keyboard flow for group switching, item selection, and paste
+
+✅Custom global shortcut and panel navigation keys
+
+✅Custom text groups and item content
 
 ## Preview
 
@@ -69,6 +76,20 @@
 
 Go to [Releases](https://github.com/Yskysoar/TorCV/releases), download the release exe, and run it directly. No installation or extra configuration is required.
 
+## FAQ
+
+### Why does Windows show an unknown publisher warning?
+
+The current build is not code-signed, so Windows may show a security warning. If the exe was downloaded from this project's Releases page, you can choose to continue.
+
+### Does TorCV upload my data to a server?
+
+No. TorCV is a local clipboard text manager, and its data stays on your machine.
+
+### How do I report bugs or request features?
+
+Open an [Issue](https://github.com/Yskysoar/TorCV/issues) for bug reports, feedback, or feature requests.
+
 ## License
 
 See [LICENSE](LICENSE).
@@ -84,3 +105,4 @@ See [LICENSE](LICENSE).
     </picture>
   </a>
 </p>
+
