@@ -5,8 +5,8 @@
 
   <p align="center">
     <a href="https://github.com/Yskysoar/TorCV"><img src="https://img.shields.io/badge/platform-Windows-0078D4?style=for-the-badge" alt="Platform"></a>
-    <a href="https://github.com/Yskysoar/TorCV/blob/main/package.json"><img src="https://img.shields.io/github/package-json/dependency-version/Yskysoar/TorCV/dev/electron?style=for-the-badge&label=Electron" alt="Electron"></a>
-    <a href="https://github.com/Yskysoar/TorCV/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Yskysoar/TorCV?style=for-the-badge" alt="License"></a>
+    <a href="https://github.com/Yskysoar/TorCV/blob/main/package.json"><img src="https://img.shields.io/badge/Electron-42-47848F?style=for-the-badge" alt="Electron"></a>
+    <a href="https://github.com/Yskysoar/TorCV/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-2EA44F?style=for-the-badge" alt="License"></a>
     <a href="https://github.com/Yskysoar/TorCV/stargazers"><img src="https://img.shields.io/github/stars/Yskysoar/TorCV?style=for-the-badge" alt="Stars"></a>
   </p>
 
@@ -67,33 +67,7 @@
 
 ## 快速开始
 
-### 用户使用
-
-下载发布版 exe，双击即可运行，无需安装、无需额外配置。
-
-### 本地开发
-
-本地开发需要 Node.js 20 或更高版本和 npm。
-
-```powershell
-npm install
-npm run lint
-npm run typecheck
-npm test
-npm start
-```
-
-### 打包
-
-```powershell
-npm run dist
-```
-
-打包产物输出到：
-
-```text
-dist/TorCV-1.0.0.exe
-```
+前往 [Releases](https://github.com/Yskysoar/TorCV/releases) 下载发布版 exe，双击即可运行，无需安装、无需额外配置。
 
 ## 许可证
 

@@ -5,8 +5,8 @@
 
   <p align="center">
     <a href="https://github.com/Yskysoar/TorCV"><img src="https://img.shields.io/badge/platform-Windows-0078D4?style=for-the-badge" alt="Platform"></a>
-    <a href="https://github.com/Yskysoar/TorCV/blob/main/package.json"><img src="https://img.shields.io/github/package-json/dependency-version/Yskysoar/TorCV/dev/electron?style=for-the-badge&label=Electron" alt="Electron"></a>
-    <a href="https://github.com/Yskysoar/TorCV/blob/main/LICENSE"><img src="https://img.shields.io/github/license/Yskysoar/TorCV?style=for-the-badge" alt="License"></a>
+    <a href="https://github.com/Yskysoar/TorCV/blob/main/package.json"><img src="https://img.shields.io/badge/Electron-42-47848F?style=for-the-badge" alt="Electron"></a>
+    <a href="https://github.com/Yskysoar/TorCV/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-2EA44F?style=for-the-badge" alt="License"></a>
     <a href="https://github.com/Yskysoar/TorCV/stargazers"><img src="https://img.shields.io/github/stars/Yskysoar/TorCV?style=for-the-badge" alt="Stars"></a>
   </p>
 
@@ -67,27 +67,7 @@
 
 ## Quick Start
 
-### Direct Use
-
-Download the release exe and run it directly. No installation or extra configuration is required.
-
-### Development
-
-Development requires Node.js 20 or newer and npm.
-
-```powershell
-npm install
-npm run lint
-npm run typecheck
-npm test
-npm start
-```
-
-### Build
-
-```powershell
-npm run dist
-```
+Go to [Releases](https://github.com/Yskysoar/TorCV/releases), download the release exe, and run it directly. No installation or extra configuration is required.
 
 ## License
 
