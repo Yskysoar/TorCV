@@ -3,9 +3,9 @@ import { VISIBLE_ITEM_COUNT } from './clipboard-view.js';
 
 const MANAGE_SCROLL_BOTTOM_GAP = 8;
 
-export function scrollManageGroups(direction) {
+function scrollManageList(listSelector, direction) {
   const contentArea = getContentArea();
-  const list = contentArea?.querySelector('#groupManageList');
+  const list = contentArea?.querySelector(listSelector);
   const row = list?.querySelector('.manage-row');
   if (!contentArea || !list || !row) return;
 
@@ -21,4 +21,12 @@ export function scrollManageGroups(direction) {
   let target = Math.round(current / step) * step + (dir * step);
   target = Math.max(0, Math.min(max, target));
   contentArea.scrollTo({ top: Math.round(target), behavior: 'smooth' });
+}
+
+export function scrollManageGroups(direction) {
+  scrollManageList('#groupManageList', direction);
+}
+
+export function scrollManageItems(direction) {
+  scrollManageList('#itemManageList', direction);
 }

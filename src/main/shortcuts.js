@@ -12,7 +12,7 @@ import {
   sortedItems
 } from './helpers.js';
 import { scrollToSelected } from './clipboard-view.js';
-import { scrollManageGroups } from './manage-scroll.js';
+import { scrollManageGroups, scrollManageItems } from './manage-scroll.js';
 
 let _render = null;
 let _renderClipboard = null;
@@ -62,12 +62,14 @@ async function handleKeydown(event) {
       state.mode = 'clipboard';
       state.editingGroupId = null;
       _render();
-    } else if (state.manageTab === 'groups' && !state.editingGroupId && equalsKey(key, keymap.up)) {
+    } else if (state.manageTab === 'groups' && equalsKey(key, keymap.up)) {
       event.preventDefault();
-      scrollManageGroups(-1);
-    } else if (state.manageTab === 'groups' && !state.editingGroupId && equalsKey(key, keymap.down)) {
+      if (state.editingGroupId) scrollManageItems(-1);
+      else scrollManageGroups(-1);
+    } else if (state.manageTab === 'groups' && equalsKey(key, keymap.down)) {
       event.preventDefault();
-      scrollManageGroups(1);
+      if (state.editingGroupId) scrollManageItems(1);
+      else scrollManageGroups(1);
     } else if (equalsKey(key, keymap.left)) {
       event.preventDefault();
       moveManageTab(-1);
