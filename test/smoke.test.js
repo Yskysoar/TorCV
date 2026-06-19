@@ -2,7 +2,7 @@
 
 const test = require('node:test');
 const assert = require('node:assert/strict');
-const { existsSync } = require('node:fs');
+const { existsSync, readFileSync } = require('node:fs');
 const { join } = require('node:path');
 
 const root = join(__dirname, '..');
@@ -31,4 +31,11 @@ test('native Win32 foreground handle helper is available', () => {
 test('removed design-demo and quick implementations stay absent', () => {
   assert.equal(existsSync(join(root, 'design-demo')), false);
   assert.equal(existsSync(join(root, 'src', 'quick')), false);
+});
+
+test('login item uses real app path without pre-quoting development args', () => {
+  const loginItemSource = readFileSync(join(root, 'src', 'login-item.js'), 'utf8');
+  assert.equal(loginItemSource.includes('quoteArgument'), false);
+  assert.match(loginItemSource, /path\.isAbsolute\(appPath\)/);
+  assert.match(loginItemSource, /app\.isPackaged \? \[\] : \[getDevelopmentAppPath\(\)\]/);
 });

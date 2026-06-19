@@ -44,13 +44,17 @@ export function render() {
 
 function switchManageTab(tab) {
   if (state.manageTab === tab) return;
-  const contentArea = getContentArea();
-  if (contentArea) contentArea.scrollTop = 0;
+  resetContentScroll();
   state.manageTab = tab;
   state.editingGroupId = null;
   state.recordingAction = null;
   state.recordingGlobal = false;
   render();
+}
+
+function resetContentScroll() {
+  const contentArea = getContentArea();
+  if (contentArea) contentArea.scrollTop = 0;
 }
 
 export function openClipboardPanel() {
@@ -66,6 +70,7 @@ export function openClipboardPanel() {
   state.confirmingDeleteGroupId = null;
   state.confirmingClearClipboard = false;
   clearTimeout(state.clearClipboardTimer);
+  resetContentScroll();
   render();
 }
 
@@ -103,6 +108,7 @@ export function renderTopStrip() {
       btn.addEventListener('click', () => {
         state.selectedGroupId = btn.dataset.groupId;
         state.selectedItemIndex = 0;
+        resetContentScroll();
         render();
       });
     });
@@ -132,6 +138,8 @@ export function renderTopStrip() {
   listen('#backToClipboard', 'click', () => {
     state.mode = 'clipboard';
     state.editingGroupId = null;
+    state.selectedItemIndex = 0;
+    resetContentScroll();
     render();
   });
 }

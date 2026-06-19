@@ -131,6 +131,8 @@ export function moveGroup(delta) {
   const next = Math.max(0, Math.min(groups.length - 1, index + delta));
   state.selectedGroupId = groups[next]?.id || state.selectedGroupId;
   state.selectedItemIndex = 0;
+  const contentArea = getContentArea();
+  if (contentArea) contentArea.scrollTop = 0;
   _render();
 }
 
