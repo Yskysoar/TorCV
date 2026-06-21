@@ -1,6 +1,6 @@
 import state from './renderer-state.js';
 import {
-  $, esc, listen, getContentArea,
+  esc, listen, getContentArea,
   sortedItems, sortedGroups, selectedGroup,
   clampSelectedItem, showToast, api
 } from './helpers.js';
@@ -10,10 +10,17 @@ import {
 /** 剪贴板视图一次可见的条目数 */
 export const VISIBLE_ITEM_COUNT = 3;
 
-/** fallback 值，实际运行时通过 DOM 测量覆盖（80px card + 15px list gap） */
-export const CLIP_ITEM_STEP = 95;
-
 // ── 渲染 ──────────────────────────────────────────────────────────────────
+
+function visibleItemWindow(items, selectedIndex) {
+  if (items.length <= VISIBLE_ITEM_COUNT) {
+    return items.map((item, index) => ({ item, index }));
+  }
+
+  const maxStart = items.length - VISIBLE_ITEM_COUNT;
+  const start = Math.max(0, Math.min(maxStart, selectedIndex - 1));
+  return items.slice(start, start + VISIBLE_ITEM_COUNT).map((item, offset) => ({ item, index: start + offset }));
+}
 
 /**
  * 渲染剪贴板视图
@@ -30,10 +37,11 @@ export function renderClipboardView(callbacks = {}) {
   }
   const items = sortedItems(group);
   clampSelectedItem();
+  const visibleItems = visibleItemWindow(items, state.selectedItemIndex);
   contentArea.innerHTML = `
     <section class="panel">
       <div class="clip-list" id="clipList">
-        ${items.length ? items.map((item, index) => `
+        ${visibleItems.length ? visibleItems.map(({ item, index }) => `
           <article class="clip-card ${index === state.selectedItemIndex ? 'selected' : ''}" data-item-id="${esc(item.id)}">
             <p class="clip-text">${esc(item.text)}</p>
           </article>
@@ -43,7 +51,7 @@ export function renderClipboardView(callbacks = {}) {
   `;
   contentArea.querySelectorAll('[data-item-id]').forEach((card, index) => {
     card.addEventListener('click', () => {
-      state.selectedItemIndex = index;
+      state.selectedItemIndex = visibleItems[index]?.index ?? state.selectedItemIndex;
       if (onSelect) onSelect();
     });
     card.addEventListener('dblclick', () => {
@@ -62,43 +70,7 @@ export function renderClipboardView(callbacks = {}) {
  * @param {number} delta         方向（正 = 向下，负 = 向上）
  */
 export function scrollToSelected(selectedIndex, totalItems, delta) {
-  if (totalItems <= VISIBLE_ITEM_COUNT) return;
-  requestAnimationFrame(() => {
-    const contentArea = getContentArea();
-    if (!contentArea) return;
-    const list = $('#clipList');
-    const firstCard = list?.querySelector('.clip-card');
-    const selectedCard = list?.querySelector('.clip-card.selected');
-    if (!firstCard || !selectedCard) return;
-
-    const listStyle = window.getComputedStyle(list);
-    const gap = Number.parseFloat(listStyle.rowGap || listStyle.gap) || 0;
-    const measuredStep = firstCard.getBoundingClientRect().height + gap;
-    const itemStep = Number.isFinite(measuredStep) && measuredStep > 0 ? Math.max(measuredStep, CLIP_ITEM_STEP) : CLIP_ITEM_STEP;
-
-    // 从当前 scrollTop 反推窗口起始行号
-    const currentWindowStart = Math.round(contentArea.scrollTop / itemStep);
-    const maxWindowStart = totalItems - VISIBLE_ITEM_COUNT;
-
-    // 新 selectedIndex 在当前窗口内的位置
-    const posInWindow = selectedIndex - currentWindowStart;
-
-    let newWindowStart;
-    if (posInWindow < 0) {
-      // 超出顶部 -> 窗口上移，选中在新窗口顶部
-      newWindowStart = selectedIndex;
-    } else if (posInWindow >= VISIBLE_ITEM_COUNT) {
-      // 超出底部 -> 窗口下移，选中在新窗口底部
-      newWindowStart = selectedIndex - VISIBLE_ITEM_COUNT + 1;
-    } else {
-      // 在窗口内 -> 不滚动
-      newWindowStart = currentWindowStart;
-    }
-
-    // clamp 边界
-    newWindowStart = Math.max(0, Math.min(maxWindowStart, newWindowStart));
-    contentArea.scrollTop = Math.round(newWindowStart * itemStep);
-  });
+  // 三槽位固定渲染不需要滚动 DOM；保留导出兼容键盘处理调用。
 }
 
 // ── 粘贴 ──────────────────────────────────────────────────────────────────

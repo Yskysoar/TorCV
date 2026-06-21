@@ -50,3 +50,11 @@ test('clipboard panel follows cursor and paste has native path', () => {
   assert.match(pasteSource, /nativePasteSync/);
   assert.match(pasteSource, /PowerShell/);
 });
+
+test('clipboard view renders fixed three-slot window', () => {
+  const clipboardViewSource = readFileSync(join(root, 'src', 'main', 'clipboard-view.js'), 'utf8');
+  assert.match(clipboardViewSource, /function visibleItemWindow/);
+  assert.match(clipboardViewSource, /VISIBLE_ITEM_COUNT = 3/);
+  assert.match(clipboardViewSource, /visibleItems\.map/);
+  assert.equal(clipboardViewSource.includes('items.length ? items.map'), false);
+});
