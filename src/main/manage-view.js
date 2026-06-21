@@ -8,7 +8,7 @@ import {
 } from './helpers.js';
 import { showModalInput } from './modal.js';
 import { bindSortableRows } from './drag.js';
-import { scrollManageItems } from './manage-scroll.js';
+import { scrollManageGroups, scrollManageItems } from './manage-scroll.js';
 
 // ── 渲染函数注入（避免循环依赖） ──────────────────────────────────────────
 
@@ -208,11 +208,15 @@ export function renderShortcutSettings() {
 
 export function renderGroupSettings() {
   const contentArea = getContentArea();
-  contentArea.onwheel = null;
+  contentArea.onwheel = (event) => {
+    if (!event.target.closest('#groupManageList')) return;
+    event.preventDefault();
+    scrollManageGroups(event.deltaY > 0 ? 1 : -1);
+  };
   // SVG paths: trash
   const trashPath = 'M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6';
   contentArea.innerHTML = `
-    <section class="panel">
+    <section class="panel group-manage-panel">
       <div class="manage-list" id="groupManageList">
         ${sortedGroups().map((g) => {
           const isClip = isClipboardGroup(g);

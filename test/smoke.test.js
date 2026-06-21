@@ -69,3 +69,16 @@ test('clipboard view renders fixed three-slot window', () => {
   assert.match(stylesSource, /min-height: 0; padding: 12px 11px/);
   assert.equal(clipboardViewSource.includes('items.length ? items.map'), false);
 });
+
+test('group manage list keeps five-row scroll rhythm', () => {
+  const manageViewSource = readFileSync(join(root, 'src', 'main', 'manage-view.js'), 'utf8');
+  const manageScrollSource = readFileSync(join(root, 'src', 'main', 'manage-scroll.js'), 'utf8');
+  const stylesSource = readFileSync(join(root, 'src', 'styles.css'), 'utf8');
+  assert.match(manageViewSource, /scrollManageGroups/);
+  assert.match(manageViewSource, /group-manage-panel/);
+  assert.match(stylesSource, /--group-row-height: calc\(\(100% - \(var\(--group-row-gap\) \* 6\)\) \/ 5\)/);
+  assert.match(stylesSource, /#groupManageList \{ gap: var\(--group-row-gap\); padding: var\(--group-row-gap\) 0; \}/);
+  assert.match(stylesSource, /#groupManageList \.manage-row \{ height: var\(--group-row-height\); min-height: var\(--group-row-height\); \}/);
+  assert.match(manageScrollSource, /rowStep \* rowsPerStep/);
+  assert.match(manageScrollSource, /Math\.round\(current \/ rowStep\)/);
+});
