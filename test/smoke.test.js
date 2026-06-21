@@ -76,9 +76,10 @@ test('group manage list keeps five-row scroll rhythm', () => {
   const stylesSource = readFileSync(join(root, 'src', 'styles.css'), 'utf8');
   assert.match(manageViewSource, /scrollManageGroups/);
   assert.match(manageViewSource, /group-manage-panel/);
-  assert.match(stylesSource, /--group-row-height: calc\(\(100% - \(var\(--group-row-gap\) \* 6\)\) \/ 5\)/);
-  assert.match(stylesSource, /#groupManageList \{ gap: var\(--group-row-gap\); padding: var\(--group-row-gap\) 0; \}/);
-  assert.match(stylesSource, /#groupManageList \.manage-row \{ height: var\(--group-row-height\); min-height: var\(--group-row-height\); \}/);
+  assert.match(stylesSource, /#groupManageList \{/);
+  assert.match(stylesSource, /height: 100%; gap: var\(--group-row-gap\); padding: var\(--group-row-gap\) 0;/);
+  assert.match(stylesSource, /grid-auto-rows: calc\(\(100% - \(var\(--group-row-gap\) \* 6\)\) \/ 5\)/);
+  assert.equal(stylesSource.includes('#groupManageList .manage-row { height:'), false);
   assert.match(manageScrollSource, /rowStep \* rowsPerStep/);
   assert.match(manageScrollSource, /Math\.round\(current \/ rowStep\)/);
 });

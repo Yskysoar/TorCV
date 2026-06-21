@@ -108,9 +108,11 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 .settings-list,
 .manage-list { display: grid; gap: 10px; grid-template-columns: 1fr; }
 .clip-list { height: 100%; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 10px; align-content: stretch; }
-.group-manage-panel { --group-row-gap: 8px; --group-row-height: calc((100% - (var(--group-row-gap) * 6)) / 5); }
-#groupManageList { gap: var(--group-row-gap); padding: var(--group-row-gap) 0; }
-#groupManageList .manage-row { height: var(--group-row-height); min-height: var(--group-row-height); }
+.group-manage-panel { --group-row-gap: 8px; }
+#groupManageList {
+  height: 100%; gap: var(--group-row-gap); padding: var(--group-row-gap) 0;
+  grid-auto-rows: calc((100% - (var(--group-row-gap) * 6)) / 5);
+}
 
 .clip-card {
   border: 1px solid var(--line); border-radius: 5px; background: var(--surface);
