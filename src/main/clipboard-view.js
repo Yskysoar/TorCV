@@ -1,6 +1,6 @@
 import state from './renderer-state.js';
 import {
-  esc, listen, getContentArea,
+  $, esc, listen, getContentArea,
   sortedItems, sortedGroups, selectedGroup,
   clampSelectedItem, showToast, api
 } from './helpers.js';
