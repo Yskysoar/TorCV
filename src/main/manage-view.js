@@ -48,6 +48,7 @@ export function renderManageView() {
   const contentArea = getContentArea();
   const fixedManagePage = (state.manageTab === 'system' || state.manageTab === 'shortcuts') && !state.editingGroupId;
   contentArea?.classList.toggle('no-scroll', fixedManagePage);
+  contentArea?.classList.toggle('group-scroll', state.manageTab === 'groups' && !state.editingGroupId);
 
   if (state.editingGroupId) {
     renderGroupItemsView(state.editingGroupId);

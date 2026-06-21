@@ -102,6 +102,7 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   -ms-overflow-style: none;
 }
 .content.no-scroll { overflow-y: hidden; padding: 16px 16px 12px; }
+.content.group-scroll { padding: 0 16px; }
 .content::-webkit-scrollbar { display: none; }
 .panel { box-sizing: border-box; height: 100%; }
 .clip-list,
