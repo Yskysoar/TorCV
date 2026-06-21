@@ -62,6 +62,7 @@ export function openClipboardPanel() {
   state.mode = 'clipboard';
   state.selectedGroupId = firstGroup ? firstGroup.id : null;
   state.selectedItemIndex = 0;
+  state.clipboardWindowStart = 0;
   state.editingGroupId = null;
   state.renamingGroup = false;
   state.editingItemId = null;
@@ -108,6 +109,7 @@ export function renderTopStrip() {
       btn.addEventListener('click', () => {
         state.selectedGroupId = btn.dataset.groupId;
         state.selectedItemIndex = 0;
+        state.clipboardWindowStart = 0;
         resetContentScroll();
         render();
       });
@@ -139,6 +141,7 @@ export function renderTopStrip() {
     state.mode = 'clipboard';
     state.editingGroupId = null;
     state.selectedItemIndex = 0;
+    state.clipboardWindowStart = 0;
     resetContentScroll();
     render();
   });

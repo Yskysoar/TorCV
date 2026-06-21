@@ -14,11 +14,16 @@ export const VISIBLE_ITEM_COUNT = 3;
 
 function visibleItemWindow(items, selectedIndex) {
   if (items.length <= VISIBLE_ITEM_COUNT) {
+    state.clipboardWindowStart = 0;
     return items.map((item, index) => ({ item, index }));
   }
 
   const maxStart = items.length - VISIBLE_ITEM_COUNT;
-  const start = Math.max(0, Math.min(maxStart, selectedIndex - 1));
+  let start = Math.max(0, Math.min(maxStart, state.clipboardWindowStart || 0));
+  if (selectedIndex < start) start = selectedIndex;
+  if (selectedIndex >= start + VISIBLE_ITEM_COUNT) start = selectedIndex - VISIBLE_ITEM_COUNT + 1;
+  start = Math.max(0, Math.min(maxStart, start));
+  state.clipboardWindowStart = start;
   return items.slice(start, start + VISIBLE_ITEM_COUNT).map((item, offset) => ({ item, index: start + offset }));
 }
 

@@ -53,8 +53,12 @@ test('clipboard panel follows cursor and paste has native path', () => {
 
 test('clipboard view renders fixed three-slot window', () => {
   const clipboardViewSource = readFileSync(join(root, 'src', 'main', 'clipboard-view.js'), 'utf8');
+  const rendererStateSource = readFileSync(join(root, 'src', 'main', 'renderer-state.js'), 'utf8');
   assert.match(clipboardViewSource, /function visibleItemWindow/);
   assert.match(clipboardViewSource, /VISIBLE_ITEM_COUNT = 3/);
+  assert.match(clipboardViewSource, /clipboardWindowStart/);
+  assert.match(clipboardViewSource, /selectedIndex >= start \+ VISIBLE_ITEM_COUNT/);
+  assert.match(rendererStateSource, /clipboardWindowStart: 0/);
   assert.match(clipboardViewSource, /visibleItems\.map/);
   assert.equal(clipboardViewSource.includes('items.length ? items.map'), false);
 });

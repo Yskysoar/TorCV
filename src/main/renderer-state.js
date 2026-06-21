@@ -8,6 +8,7 @@ const state = {
   manageTab: 'system',         // system | shortcuts | groups
   editingGroupId: null,
   selectedItemIndex: 0,
+  clipboardWindowStart: 0,
   toastTimer: null,
   dragState: null,
   recordingAction: null,       // 'up'|'down'|'left'|'right'|'confirm'|null
