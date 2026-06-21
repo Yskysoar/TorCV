@@ -26,6 +26,8 @@ test('quality scripts are available', () => {
 
 test('native Win32 foreground handle helper is available', () => {
   assert.equal(typeof win32.getForegroundWindowHandleSync, 'function');
+  assert.equal(typeof win32.nativePasteSync, 'function');
+  assert.equal(typeof win32.nativeRestoreFocusSync, 'function');
 });
 
 test('removed design-demo and quick implementations stay absent', () => {
@@ -38,4 +40,13 @@ test('login item uses real app path without pre-quoting development args', () =>
   assert.equal(loginItemSource.includes('quoteArgument'), false);
   assert.match(loginItemSource, /path\.isAbsolute\(appPath\)/);
   assert.match(loginItemSource, /app\.isPackaged \? \[\] : \[getDevelopmentAppPath\(\)\]/);
+});
+
+test('clipboard panel follows cursor and paste has native path', () => {
+  const managerWindowSource = readFileSync(join(root, 'src', 'manager-window.js'), 'utf8');
+  const pasteSource = readFileSync(join(root, 'src', 'paste-simulator.js'), 'utf8');
+  assert.match(managerWindowSource, /getCursorScreenPoint/);
+  assert.match(managerWindowSource, /getDisplayNearestPoint/);
+  assert.match(pasteSource, /nativePasteSync/);
+  assert.match(pasteSource, /PowerShell/);
 });

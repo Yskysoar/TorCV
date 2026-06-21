@@ -1,7 +1,7 @@
 'use strict';
 
 const { execFile } = require('node:child_process');
-const { getForegroundWindowHandleSync } = require('./win32');
+const { getForegroundWindowHandleSync, nativePasteSync, nativeRestoreFocusSync } = require('./win32');
 
 /** 公共 User32 P/Invoke 声明，供 PowerShell Add-Type 使用 */
 const USER32_METHODS = {
@@ -74,6 +74,13 @@ ${USER32_BASIC}
 }
 
 function simulatePaste(hwnd) {
+  const nativeResult = nativePasteSync(hwnd);
+  if (nativeResult === true) {
+    console.log('[paste] native result: true');
+    return Promise.resolve(true);
+  }
+  if (nativeResult === false) console.log('[paste] native result: false, fallback to PowerShell');
+
   return new Promise((resolve) => {
     const target = Number.isFinite(Number(hwnd)) ? Math.trunc(Number(hwnd)) : 0;
     if (target <= 0) {
@@ -122,6 +129,10 @@ Write-Output "PASTE_OK"
 }
 
 function restoreTargetFocus(hwnd) {
+  const nativeResult = nativeRestoreFocusSync(hwnd);
+  if (nativeResult === true) return Promise.resolve(true);
+  if (nativeResult === false) console.log('[focus] native restore result: false, fallback to PowerShell');
+
   return new Promise((resolve) => {
     const target = Number.isFinite(Number(hwnd)) ? Math.trunc(Number(hwnd)) : 0;
     if (target <= 0) {
