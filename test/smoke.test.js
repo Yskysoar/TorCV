@@ -47,6 +47,8 @@ test('clipboard panel follows cursor and paste has native path', () => {
   const pasteSource = readFileSync(join(root, 'src', 'paste-simulator.js'), 'utf8');
   assert.match(managerWindowSource, /getCursorScreenPoint/);
   assert.match(managerWindowSource, /getDisplayNearestPoint/);
+  assert.match(managerWindowSource, /setSize\(PANEL_BOUNDS\.width, PANEL_BOUNDS\.height/);
+  assert.match(managerWindowSource, /\.on\('blur'/);
   assert.match(pasteSource, /nativePasteSync/);
   assert.match(pasteSource, /PowerShell/);
 });
@@ -54,11 +56,14 @@ test('clipboard panel follows cursor and paste has native path', () => {
 test('clipboard view renders fixed three-slot window', () => {
   const clipboardViewSource = readFileSync(join(root, 'src', 'main', 'clipboard-view.js'), 'utf8');
   const rendererStateSource = readFileSync(join(root, 'src', 'main', 'renderer-state.js'), 'utf8');
+  const stylesSource = readFileSync(join(root, 'src', 'styles.css'), 'utf8');
   assert.match(clipboardViewSource, /function visibleItemWindow/);
   assert.match(clipboardViewSource, /VISIBLE_ITEM_COUNT = 3/);
   assert.match(clipboardViewSource, /clipboardWindowStart/);
   assert.match(clipboardViewSource, /selectedIndex >= start \+ VISIBLE_ITEM_COUNT/);
   assert.match(rendererStateSource, /clipboardWindowStart: 0/);
   assert.match(clipboardViewSource, /visibleItems\.map/);
+  assert.match(stylesSource, /\.clip-list \{ gap: 8px; \}/);
+  assert.match(stylesSource, /height: 78px; padding: 10px 11px/);
   assert.equal(clipboardViewSource.includes('items.length ? items.map'), false);
 });

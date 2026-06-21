@@ -29,7 +29,12 @@ function positionNearCursor(win) {
   win.setPosition(x, y, false);
 }
 
+function resetPanelBounds(win) {
+  win.setSize(PANEL_BOUNDS.width, PANEL_BOUNDS.height, false);
+}
+
 function showWindow(win) {
+  resetPanelBounds(win);
   win.show();
   win.focus();
 }
@@ -47,6 +52,11 @@ function createManagerWindow() {
   state.managerWin.webContents.on('console-message', (_e, level, msg) => console.log('[renderer]', msg));
   state.managerWin.once('ready-to-show', () => {
     if (state.pendingOpenClipboard || state.pendingOpenSettings) showWindow(state.managerWin);
+  });
+  state.managerWin.on('blur', () => {
+    if (app.isQuitting || state.managerWin.isDestroyed() || !state.managerWin.isVisible()) return;
+    state.targetHwnd = null;
+    state.managerWin.hide();
   });
   state.managerWin.on('close', (e) => { if (!app.isQuitting) { e.preventDefault(); state.managerWin.hide(); } });
   return state.managerWin;
@@ -68,6 +78,7 @@ function showClipboardPanel() {
   state.pendingOpenSettings = false;
   state.pendingOpenClipboard = true;
   const win = createManagerWindow();
+  resetPanelBounds(win);
   positionNearCursor(win);
   if (!win.webContents.isLoading()) {
     win.webContents.send('ct:openClipboard');
