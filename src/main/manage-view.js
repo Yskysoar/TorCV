@@ -42,6 +42,14 @@ async function moveItemToTop(groupId, itemId) {
   await api.data.reorderItems(groupId, orderedIds);
 }
 
+function fitGroupRowsToPage(contentArea) {
+  const list = contentArea?.querySelector('#groupManageList');
+  if (!list) return;
+  const gap = Number.parseFloat(window.getComputedStyle(list).getPropertyValue('--group-row-gap')) || 8;
+  const rowHeight = (contentArea.clientHeight - (gap * 6)) / 5;
+  list.style.setProperty('--group-row-height', `${rowHeight}px`);
+}
+
 // ── 路由分发 ──────────────────────────────────────────────────────────────
 
 export function renderManageView() {
@@ -209,11 +217,7 @@ export function renderShortcutSettings() {
 
 export function renderGroupSettings() {
   const contentArea = getContentArea();
-  contentArea.onwheel = (event) => {
-    if (!event.target.closest('#groupManageList')) return;
-    event.preventDefault();
-    scrollManageGroups(event.deltaY > 0 ? 1 : -1);
-  };
+  contentArea.onwheel = null;
   // SVG paths: trash
   const trashPath = 'M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M10 11v6M14 11v6';
   contentArea.innerHTML = `
@@ -241,6 +245,7 @@ export function renderGroupSettings() {
       </div>
     </section>
   `;
+  requestAnimationFrame(() => fitGroupRowsToPage(contentArea));
   listen('#btnAddGroup', 'click', addGroup);
 
   contentArea.querySelectorAll('[data-delete-group]').forEach((btn) => {

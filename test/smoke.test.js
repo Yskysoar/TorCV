@@ -76,11 +76,15 @@ test('group manage list keeps five-row scroll rhythm', () => {
   const stylesSource = readFileSync(join(root, 'src', 'styles.css'), 'utf8');
   assert.match(manageViewSource, /scrollManageGroups/);
   assert.match(manageViewSource, /group-manage-panel/);
+  assert.match(manageViewSource, /contentArea\.onwheel = null/);
+  assert.match(manageViewSource, /function fitGroupRowsToPage/);
+  assert.match(manageViewSource, /contentArea\.clientHeight - \(gap \* 6\)/);
+  assert.match(manageViewSource, /--group-row-height/);
   assert.match(manageViewSource, /classList\.toggle\('group-scroll'/);
   assert.match(stylesSource, /\.content\.group-scroll \{ padding: 0 16px; \}/);
   assert.match(stylesSource, /#groupManageList \{/);
-  assert.match(stylesSource, /height: 100%; gap: var\(--group-row-gap\); padding: var\(--group-row-gap\) 0;/);
-  assert.match(stylesSource, /grid-auto-rows: calc\(\(100% - \(var\(--group-row-gap\) \* 6\)\) \/ 5\)/);
+  assert.match(stylesSource, /gap: var\(--group-row-gap\); padding: var\(--group-row-gap\) 0;/);
+  assert.match(stylesSource, /grid-auto-rows: var\(--group-row-height\)/);
   assert.equal(stylesSource.includes('#groupManageList .manage-row { height:'), false);
   assert.match(manageScrollSource, /rowStep \* rowsPerStep/);
   assert.match(manageScrollSource, /Math\.round\(current \/ rowStep\)/);
