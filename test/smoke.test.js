@@ -45,6 +45,7 @@ test('login item uses real app path without pre-quoting development args', () =>
 test('clipboard panel follows cursor and paste has native path', () => {
   const managerWindowSource = readFileSync(join(root, 'src', 'manager-window.js'), 'utf8');
   const pasteSource = readFileSync(join(root, 'src', 'paste-simulator.js'), 'utf8');
+  assert.match(managerWindowSource, /width: 360, height: 400/);
   assert.match(managerWindowSource, /getCursorScreenPoint/);
   assert.match(managerWindowSource, /getDisplayNearestPoint/);
   assert.match(managerWindowSource, /setSize\(PANEL_BOUNDS\.width, PANEL_BOUNDS\.height/);
@@ -63,7 +64,8 @@ test('clipboard view renders fixed three-slot window', () => {
   assert.match(clipboardViewSource, /selectedIndex >= start \+ VISIBLE_ITEM_COUNT/);
   assert.match(rendererStateSource, /clipboardWindowStart: 0/);
   assert.match(clipboardViewSource, /visibleItems\.map/);
-  assert.match(stylesSource, /\.clip-list \{ gap: 8px; \}/);
-  assert.match(stylesSource, /height: 78px; padding: 10px 11px/);
+  assert.match(stylesSource, /\.panel \{ box-sizing: border-box; height: 100%; \}/);
+  assert.match(stylesSource, /\.clip-list \{ height: 100%; grid-template-rows: repeat\(3, minmax\(0, 1fr\)\); gap: 10px; align-content: stretch; \}/);
+  assert.match(stylesSource, /min-height: 0; padding: 12px 11px/);
   assert.equal(clipboardViewSource.includes('items.length ? items.map'), false);
 });

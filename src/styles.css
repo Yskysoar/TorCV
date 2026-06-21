@@ -103,11 +103,11 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
 }
 .content.no-scroll { overflow-y: hidden; padding: 16px 16px 12px; }
 .content::-webkit-scrollbar { display: none; }
-.panel { box-sizing: border-box; min-height: 100%; }
+.panel { box-sizing: border-box; height: 100%; }
 .clip-list,
 .settings-list,
 .manage-list { display: grid; gap: 10px; grid-template-columns: 1fr; }
-.clip-list { gap: 8px; }
+.clip-list { height: 100%; grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 10px; align-content: stretch; }
 
 .clip-card {
   border: 1px solid var(--line); border-radius: 5px; background: var(--surface);
@@ -117,7 +117,7 @@ button:disabled { opacity: 0.45; cursor: not-allowed; }
   border: 1px solid transparent; border-radius: 5px; background: var(--surface); box-shadow: var(--shadow);
 }
 .clip-card {
-  height: 78px; padding: 10px 11px; overflow: hidden;
+  min-height: 0; padding: 12px 11px; overflow: hidden;
 }
 .clip-card:hover { background: var(--surface-hover); }
 .clip-card.selected { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent); }

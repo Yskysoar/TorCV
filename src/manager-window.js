@@ -4,7 +4,7 @@ const { app, BrowserWindow, screen } = require('electron');
 const path = require('node:path');
 const state = require('./app-state');
 
-const PANEL_BOUNDS = { width: 400, height: 400, minWidth: 350, minHeight: 345 };
+const PANEL_BOUNDS = { width: 360, height: 400, minWidth: 360, minHeight: 400 };
 const PANEL_CURSOR_OFFSET = 12;
 
 // ── Manager window ─────────────────────────────────────────────────────────
