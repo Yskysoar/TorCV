@@ -123,16 +123,17 @@ function registerIpcHandlers(onQuickShortcut) {
 
   // ── 开机自启动 ──
   ipcMain.handle('ct:getLoginItem', () => {
-    const openAtLogin = !!(app.getLoginItemSettings && readLoginItemSettings().openAtLogin);
+    const openAtLogin = !!readLoginItemSettings().openAtLogin;
     store.updateSettings({ openAtLogin });
     return { openAtLogin };
   });
 
   ipcMain.handle('ct:setLoginItem', (_e, { openAtLogin } = {}) => {
     const val = !!openAtLogin;
-    try { setLoginItem(val); }
+    let result;
+    try { result = setLoginItem(val); }
     catch (err) { console.error('[loginitem] set failed:', err.message); return { openAtLogin: !val, error: err.message }; }
-    const settings = store.updateSettings({ openAtLogin: val });
+    const settings = store.updateSettings({ openAtLogin: !!result.openAtLogin });
     broadcastSettingsChanged();
     return { openAtLogin: settings.openAtLogin };
   });

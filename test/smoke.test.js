@@ -37,9 +37,16 @@ test('removed design-demo and quick implementations stay absent', () => {
 
 test('login item uses real app path without pre-quoting development args', () => {
   const loginItemSource = readFileSync(join(root, 'src', 'login-item.js'), 'utf8');
-  assert.equal(loginItemSource.includes('quoteArgument'), false);
+  const ipcSource = readFileSync(join(root, 'src', 'ipc-handlers.js'), 'utf8');
+  assert.equal(loginItemSource.includes('setLoginItemSettings'), false);
+  assert.equal(loginItemSource.includes('getLoginItemSettings'), false);
+  assert.match(loginItemSource, /HKCU\\\\Software\\\\Microsoft\\\\Windows\\\\CurrentVersion\\\\Run/);
   assert.match(loginItemSource, /path\.isAbsolute\(appPath\)/);
   assert.match(loginItemSource, /app\.isPackaged \? \[\] : \[getDevelopmentAppPath\(\)\]/);
+  assert.match(loginItemSource, /spawnSync\('reg'/);
+  assert.match(loginItemSource, /buildLoginCommand/);
+  assert.match(ipcSource, /result = setLoginItem\(val\)/);
+  assert.match(ipcSource, /openAtLogin: !!result\.openAtLogin/);
 });
 
 test('clipboard panel follows cursor and paste has native path', () => {
