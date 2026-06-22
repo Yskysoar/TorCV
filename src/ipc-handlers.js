@@ -212,7 +212,7 @@ function registerIpcHandlers(onQuickShortcut) {
       console.log('[paste] hiding panel window...');
       const hidden = panelWin.isVisible() ? new Promise((r) => panelWin.once('hide', r)) : Promise.resolve();
       if (panelWin.isVisible()) panelWin.hide();
-      await Promise.race([hidden, new Promise((r) => setTimeout(r, 60))]);
+      await Promise.race([hidden, new Promise((r) => setTimeout(r, 120))]);
       console.log('[paste] window hidden, restoring target focus:', state.targetHwnd || '(none)');
       const success = await simulatePaste(state.targetHwnd);
       console.log('[paste] simulatePaste result:', success);

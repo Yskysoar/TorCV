@@ -56,6 +56,14 @@ function releaseModifiers() {
   [0x5B, 0x5C, 0x12, 0x10, 0x11].forEach(keyUp);
 }
 
+function waitForForeground(target, timeoutMs = 220) {
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    if (getForegroundWindowHandleSync() === target) return true;
+  }
+  return getForegroundWindowHandleSync() === target;
+}
+
 function nativePasteSync(hwnd) {
   const target = normalizeHandle(hwnd);
   if (!target || !isWindowNative || !keybdEventNative) return null;
@@ -71,8 +79,7 @@ function nativePasteSync(hwnd) {
     bringWindowToTopNative(target);
     if (!focused) setForegroundWindowNative(target);
 
-    const active = getForegroundWindowHandleSync();
-    if (active !== target) return false;
+    if (!waitForForeground(target)) return false;
 
     releaseModifiers();
     keyDown(0x11);
