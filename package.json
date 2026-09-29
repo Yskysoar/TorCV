@@ -54,7 +54,7 @@
   "author": "TorCV",
   "license": "MIT",
   "devDependencies": {
-    "electron": "42.4.0",
+    "electron": "42.10.0",
     "electron-builder": "26.15.3"
   },
   "dependencies": {
